@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>EDA Phase 1 Express Boilerplate</title>
-  </head>
-  <body>
-    <ul>
+
+<head>
+  <title>Animal Planet</title>
+</head>
+
+<body>
+  <h1>Animal-tastic!</h1>
+  <h2>Check out our database</h2>
+  <h3>Find your friends...</h3>
+  <ul>
     {{#each users}}
       <li>{{name}}</li>
-      <li>{{email}}</li>
-      <li> <a href="{{id}}">Profile</a></li>
+      <p>{{email}}</p>
+      <p> <a href="{{id}}">Profile</a></p>
     {{/each}}
-    </ul>
-  </body>
+  </ul>
+  <h1>Can't find your profile?</h1>
+  <h2>Add yourself!</h2>
+  <form class="" action="/new_user" method="post">
+    <input type="text" name="{{name}}" placeholder="Enter name">
+    <input type="text" name="{{email}}" placeholder="We need your email">
+    <input type="text" name="{{url}}" placeholder="Add a website">
+    <input type="text" name="{{photo}}" placeholder="Add a link to your photo">
+    <input type="text" name="{{info}}" placeholder="Tell us your favourite food">
+    <input type="submit" name="add" value="add">
+  </form>
+<p>Thanks for stopping by!</p>
+<p>See you again soon.</p>
+
+</body>
+
 </html>

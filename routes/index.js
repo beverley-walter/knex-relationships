@@ -23,7 +23,7 @@ router.get('/:id', function (req, res) {
     res.render('profile', results)
   })
   .catch (function(error){
-    console.log(error.message)
+    //console.log(error.message)
   })
 })
 
