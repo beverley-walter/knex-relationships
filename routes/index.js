@@ -13,4 +13,18 @@ router.get('/', function (req, res) {
     })
 })
 
+router.get('/:id', function (req, res) {
+  var id = req.params.id
+  db.getUser(id, req.app.get('connection'))
+  .first()
+  .select('users.name','profile.*')
+  .join('profile', 'users.id','=','profile.user_id')
+  .then(function(results) {
+    res.render('profile', results)
+  })
+  .catch (function(error){
+    console.log(error.message)
+  })
+})
+
 module.exports = router
