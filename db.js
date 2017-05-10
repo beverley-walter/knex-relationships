@@ -2,7 +2,9 @@
 module.exports = {
   getUser: getUser,
   getUsers: getUsers,
-  newUser: newUser
+  newUser: newUser,
+  deleteUser: deleteUser,
+  deleteProfile
 }
 
 function getUsers (connection) {
@@ -10,7 +12,11 @@ function getUsers (connection) {
 }
 
 function getUser (id, connection) {
-  return connection('users').where('users.id', id)
+  return connection('users')
+  .join('profile', 'users.id', 'profile.user_id')
+  .select('*','users.id as user_id')
+  .where('users.id', id)
+  .first()
 }
 
 function newUser (data, connection){
@@ -25,4 +31,16 @@ function newUser (data, connection){
       info: data.info
     })
   })
+}
+
+function deleteUser(user_id, connection) {
+  return connection('users')
+    .where('users.id', user_id)
+    .del()
+}
+
+function deleteProfile(user_id, connection) {
+  return connection('profile')
+    .where('profile.user_id', user_id)
+    .del()
 }

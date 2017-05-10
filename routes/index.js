@@ -17,17 +17,15 @@ router.get('/', function(req, res) {
     })
 })
 
-router.get('/user', (req,res) =>{
+router.get('/users', (req,res) =>{
   res.render('index')
 })
 
 router.get('/:id', function(req, res) {
   var id = req.params.id
   db.getUser(id, req.app.get('connection'))
-    .first()
-    .select('users.name', 'profile.*')
-    .join('profile', 'users.id', '=', 'profile.user_id')
     .then(function(results) {
+      console.log({results});
       res.render('profile', results)
     })
     .catch(function(error) {
@@ -45,5 +43,17 @@ res.status(500).send("Dasebase Error:" + err.message)
 })
 })
 
+router.post('/delete/:id', (req, res) => {
+  db.deleteUser(req.params.id, req.app.get('connection'))
+    .then(() => {
+      db.deleteProfile(req.params.id, req.app.get('connection'))
+        .then(() => {
+          res.redirect('/')
+        })
+    })
+  .catch(function(err){
+res.status(500).send("Dasebase Error:" + err.message)
+})
+})
 
 module.exports = router
